@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
 import { NavBar } from "@/components/NavBar";
+import { NotesChromeProvider } from "@/components/NotesChromeContext";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 
@@ -19,8 +20,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${ibmPlexMono.variable} h-full`}>
       <body className="min-h-full flex flex-col font-mono">
-        <NavBar />
-        <main className="flex-1">{children}</main>
+        <NotesChromeProvider>
+          <NavBar />
+          <main className="flex-1">{children}</main>
+        </NotesChromeProvider>
       </body>
     </html>
   );

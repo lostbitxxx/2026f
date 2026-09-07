@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MarkdownContent } from "@/components/content/MarkdownContent";
+import { useNotesChrome } from "@/components/NotesChromeContext";
 import type { NoteSection } from "@/lib/content/parse-sections";
 
 type NoteViewerProps = {
@@ -9,8 +10,32 @@ type NoteViewerProps = {
   content: string;
 };
 
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 1023px)").matches;
+}
+
 export function NoteViewer({ sections, content }: NoteViewerProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
+  const { sectionsOpen, setSectionsOpen, sectionsSidebarId } = useNotesChrome();
+
+  useEffect(() => {
+    setSectionsOpen(!isMobileViewport());
+  }, [setSectionsOpen]);
+
+  useEffect(() => {
+    if (!sectionsOpen) {
+      return;
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && isMobileViewport()) {
+        setSectionsOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [sectionsOpen, setSectionsOpen]);
 
   useEffect(() => {
     if (sections.length === 0) {
@@ -43,20 +68,40 @@ export function NoteViewer({ sections, content }: NoteViewerProps) {
     return () => observer.disconnect();
   }, [sections]);
 
+  function handleSectionClick(sectionId: string) {
+    setActiveId(sectionId);
+    if (isMobileViewport()) {
+      setSectionsOpen(false);
+    }
+  }
+
   return (
     <div className="flex w-full flex-col lg:flex-row">
-      <aside className="lg:sticky lg:top-[57px] lg:h-[calc(100vh-57px)] lg:w-72 lg:shrink-0 lg:overflow-y-auto lg:border-r-[3px] lg:border-fg">
-        <nav className="border-b-[3px] border-fg px-4 py-4 lg:border-b-0 lg:py-8">
+      {sectionsOpen && (
+        <button
+          type="button"
+          aria-label="Close sections sidebar"
+          className="fixed inset-0 z-[55] bg-fg/40 lg:hidden"
+          onClick={() => setSectionsOpen(false)}
+        />
+      )}
+
+      <aside
+        id={sectionsSidebarId}
+        hidden={!sectionsOpen}
+        className="fixed inset-y-0 left-0 z-[60] w-72 overflow-y-auto border-r-[3px] border-fg bg-bg lg:sticky lg:top-[57px] lg:z-auto lg:h-[calc(100vh-57px)] lg:shrink-0"
+      >
+        <nav className="px-4 py-8">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-accent">
             Sections
           </p>
-          <ul className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0">
+          <ul className="flex flex-col gap-1">
             {sections.map((section) => (
-              <li key={section.id} className="shrink-0 lg:shrink">
+              <li key={section.id}>
                 <a
                   href={`#${section.id}`}
-                  onClick={() => setActiveId(section.id)}
-                  className={`block border-[3px] border-fg px-3 py-2 text-xs font-bold uppercase tracking-wide transition-colors lg:text-left ${
+                  onClick={() => handleSectionClick(section.id)}
+                  className={`block border-[3px] border-fg px-3 py-2 text-left text-xs font-bold uppercase tracking-wide transition-colors ${
                     activeId === section.id
                       ? "bg-fg text-bg"
                       : "bg-bg hover:bg-fg/10"
