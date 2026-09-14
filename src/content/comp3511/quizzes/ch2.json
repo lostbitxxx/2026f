@@ -1,0 +1,656 @@
+{
+  "id": "ch2",
+  "title": "Chapter 2 Past Midterm Question Bank",
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Operating System Services",
+      "questions": [
+        {
+          "id": "1.1",
+          "source": "Spring 2026 MC5",
+          "prompt": "Which of the following is false about service of operating systems?",
+          "options": [
+            { "label": "A", "text": "User interface can be CLI or GUI" },
+            {
+              "label": "B",
+              "text": "The logging service of OS should keep track of computer resources that each user use"
+            },
+            {
+              "label": "C",
+              "text": "Errors only occur in memory and I/O devices"
+            },
+            {
+              "label": "D",
+              "text": "Resource allocation service should allocate resources like CPU cycles, memory, file storage"
+            }
+          ],
+          "answer": "C",
+          "explanation": "Errors can occur in the CPU, memory, I/O devices, and user programs as well."
+        },
+        {
+          "id": "1.2",
+          "source": "Spring 2022 MC4",
+          "prompt": "Which of the following is false about service of operating systems?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Communication service of OS is responsible for the inter process communication."
+            },
+            {
+              "label": "B",
+              "text": "The logging service of OS should keep track of computer resources that each user use."
+            },
+            {
+              "label": "C",
+              "text": "Protection and security service of OS means OS must take appropriate actions to ensure correct and consistent computing"
+            },
+            {
+              "label": "D",
+              "text": "I/O operations often use interrupt to handle requests from I/O device."
+            }
+          ],
+          "answer": "C",
+          "explanation": "Protection involves ensuring controlled access to system resources, and Security defends against outsiders. Taking appropriate actions to ensure correct and consistent computing is the job of error detection, not protection/security."
+        },
+        {
+          "id": "1.3",
+          "source": "Spring 2023 MC4",
+          "prompt": "Which of the following is false about operating system services?",
+          "options": [
+            {
+              "label": "A",
+              "text": "OS services are a set of functions that are helpful to the user or ensure the system's efficient operation via resource management."
+            },
+            {
+              "label": "B",
+              "text": "GUI interface is not a mandatory part of OS services."
+            },
+            {
+              "label": "C",
+              "text": "To execute a C program, it's the OS's responsibility to compile the program, load it into memory and run it."
+            },
+            {
+              "label": "D",
+              "text": "OS needs to be aware of possible errors and take appropriate actions to ensure correct and consistent computing."
+            }
+          ],
+          "answer": "C",
+          "explanation": "Compiling a program is the job of the compiler, which is a system program/application software, and not a core responsibility of the OS kernel services."
+        },
+        {
+          "id": "1.4",
+          "source": "Spring 2022 MC6",
+          "prompt": "Which of the following statement is false about security and protection in operating systems?",
+          "options": [
+            {
+              "label": "A",
+              "text": "OS must protect itself from user programs"
+            },
+            {
+              "label": "B",
+              "text": "Security means the defence of the system against all kinds of internal attacks."
+            },
+            {
+              "label": "C",
+              "text": "OS should have the ability to against external attacks like viruses and malware"
+            },
+            {
+              "label": "D",
+              "text": "An access right is the permission to perform an operation on an object."
+            }
+          ],
+          "answer": "B",
+          "explanation": "Security means the defence of the system against both internal and external attacks."
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "User and Operating System Interfaces & System Calls",
+      "questions": [
+        {
+          "id": "2.1",
+          "source": "Spring 2024 MC4",
+          "prompt": "What is the purpose of providing system calls to user programs?",
+          "options": [
+            {
+              "label": "A",
+              "text": "It provide program portability across different systems"
+            },
+            {
+              "label": "B",
+              "text": "It provides services by the OS that are not available in user programs"
+            },
+            {
+              "label": "C",
+              "text": "It hides the complex details from user programs"
+            },
+            {
+              "label": "D",
+              "text": "It offers more functionality and flexibility"
+            }
+          ],
+          "answer": "B",
+          "explanation": "User programs are restricted from directly accessing hardware or executing certain instructions. System calls are provided to allow the OS to perform these privileged actions on their behalf."
+        },
+        {
+          "id": "2.2",
+          "source": "Spring 2025 MC5",
+          "prompt": "What is a primary advantage of using APIs (Application Programming Interfaces) over directly invoking system calls in programming?",
+          "options": [
+            {
+              "label": "A",
+              "text": "APIs ensure faster execution of system calls due to optimized library functions."
+            },
+            {
+              "label": "B",
+              "text": "APIs provide a simplified and consistent interface for application programmers."
+            },
+            {
+              "label": "C",
+              "text": "APIs allow direct access to system hardware resources, bypassing kernel restrictions."
+            },
+            {
+              "label": "D",
+              "text": "APIs reduce the number of required parameters for system calls, enhancing efficiency."
+            }
+          ],
+          "answer": "B",
+          "explanation": "APIs provide a simplified and consistent interface for application programmers."
+        },
+        {
+          "id": "2.3",
+          "source": "Spring 2026 MC6",
+          "prompt": "Which of the following is an advantage of using APIs instead of directly invoking system calls?",
+          "options": [
+            { "label": "A", "text": "APIs are faster than system calls" },
+            {
+              "label": "B",
+              "text": "Program portability across systems that support the same API"
+            },
+            {
+              "label": "C",
+              "text": "APIs execute in kernel mode directly"
+            },
+            {
+              "label": "D",
+              "text": "APIs allow direct control of hardware"
+            }
+          ],
+          "answer": "B",
+          "explanation": "Programming with standard APIs provides program portability across different operating systems that support the same API standard."
+        },
+        {
+          "id": "2.4",
+          "source": "Fall 2022 MC4",
+          "prompt": "Which of the following statements is NOT true about APIs?",
+          "options": [
+            {
+              "label": "A",
+              "text": "It allows running programs to request services from operating systems"
+            },
+            {
+              "label": "B",
+              "text": "It hides the complex details in system calls."
+            },
+            {
+              "label": "C",
+              "text": "It intercepts function calls and invokes the necessary system calls"
+            },
+            {
+              "label": "D",
+              "text": "It provides program portability"
+            }
+          ],
+          "answer": "C",
+          "explanation": "The API itself does not intercept function calls. Rather, the system call interface of the operating system intercepts function calls in APIs and invokes the necessary system calls within the kernel."
+        },
+        {
+          "id": "2.5",
+          "source": "Spring 2022 MC5",
+          "prompt": "Which of the following is true about system calls?",
+          "options": [
+            {
+              "label": "A",
+              "text": "It is better to invoke system calls directly rather than using APIs."
+            },
+            {
+              "label": "B",
+              "text": "The parameters of system call can only be passed by using registers."
+            },
+            {
+              "label": "C",
+              "text": "Command interpreter is a kind of system call."
+            },
+            {
+              "label": "D",
+              "text": "System calls are generally available as functions written in a high-level language"
+            }
+          ],
+          "answer": "D",
+          "explanation": "A is false as APIs are preferred for portability/simplicity; B is false because registers, memory blocks, or stacks can be used; C is false because a CLI interpreter is a system program, not a system call."
+        },
+        {
+          "id": "2.6",
+          "source": "Spring 2023 MC5",
+          "prompt": "During the execution of a system call, the following four events occur: (1) Returning to user mode. (2) Execution of the trap instruction. (3) Passing parameters to the system call. (4) Execution of the system call. The correct order of execution is ____.",
+          "options": [
+            { "label": "A", "text": "2 → 3 → 1 → 4" },
+            { "label": "B", "text": "2 → 4 → 3 → 1" },
+            { "label": "C", "text": "3 → 2 → 4 → 1" },
+            { "label": "D", "text": "3 → 4 → 2 → 1" }
+          ],
+          "answer": "C",
+          "explanation": "First, parameters are passed to the registers or memory block (3). Then, the trap instruction is executed to transition to kernel mode (2). The kernel executes the actual system call (4) and finally returns to user mode (1)."
+        },
+        {
+          "id": "2.7",
+          "source": "Spring 2023 MC6",
+          "prompt": "Which of the following statement is true about system calls?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The APIs are alternate versions of system calls as they can completely replace the system calls in the OS implementation."
+            },
+            {
+              "label": "B",
+              "text": "Programs implemented with APIs can often achieve better performance compared to those implemented directly with system calls."
+            },
+            {
+              "label": "C",
+              "text": "The number of parameters passed to system calls is limited if the stack method is used in parameter passing."
+            },
+            {
+              "label": "D",
+              "text": "In the shared-memory interprocess communication model, processes use system calls to create and gain access to regions of memory owned by other processes."
+            }
+          ],
+          "answer": "D",
+          "explanation": "A is false because APIs rely on system calls to access the kernel; B is false as APIs add a layer of abstraction, which can add overhead; C is false because block memory or stack methods allow virtually unlimited parameters compared to register limits."
+        },
+        {
+          "id": "2.8",
+          "source": "Spring 2026 MC8",
+          "prompt": "A C program invoking printf() library call. Which statement is correct?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Both printf() and write() are system calls provided directly by the kernel"
+            },
+            {
+              "label": "B",
+              "text": "printf() invokes write() system call to get service from operating system"
+            },
+            {
+              "label": "C",
+              "text": "The program enters kernel mode immediately when printf() is called"
+            },
+            {
+              "label": "D",
+              "text": "write() system call invokes printf() to perform the print function"
+            }
+          ],
+          "answer": "B",
+          "explanation": "printf() is a standard library function. It does not enter kernel mode immediately; it performs internal formatting and then invokes the write() system call, which executes in kernel mode."
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "Linkers, Loaders, and System Programs",
+      "questions": [
+        {
+          "id": "3.1",
+          "source": "Spring 2024 MC5",
+          "prompt": "Which is the major advantage of dynamic link libraries or DLLs?",
+          "options": [
+            {
+              "label": "A",
+              "text": "DLL, in conjunction with a linker, combine multiple object files into a single executed binary file"
+            },
+            {
+              "label": "B",
+              "text": "DLL, delays the linking of libraries into an executed file"
+            },
+            {
+              "label": "C",
+              "text": "DLL provides better memory efficiency by allowing sharing of libraries among multiple programs instead of linking into each executable program file"
+            },
+            {
+              "label": "D",
+              "text": "DLL enables dynamic loading of libraries into the memory"
+            }
+          ],
+          "answer": "C",
+          "explanation": "DLLs provide superior memory efficiency because a single version of the library is loaded into memory only once and shared by all running programs that use it."
+        }
+      ]
+    },
+    {
+      "id": "topic-4",
+      "title": "Operating System Design and Implementation",
+      "questions": [
+        {
+          "id": "4.1",
+          "source": "Fall 2023 MC6",
+          "prompt": "Which of the following statements on policy is incorrect?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The policy usually cannot be changed"
+            },
+            {
+              "label": "B",
+              "text": "The policy is not concerned with implementation"
+            },
+            {
+              "label": "C",
+              "text": "The policy specifies what needs to be done"
+            },
+            {
+              "label": "D",
+              "text": "The policy is separated from mechanism to minimize changes in implementation"
+            }
+          ],
+          "answer": "A",
+          "explanation": "Policies specify what will be done and are designed to be easily changed. Separating them from hardware/software mechanisms ensures that policy changes do not require a complete redesign of the underlying mechanisms."
+        }
+      ]
+    },
+    {
+      "id": "topic-5",
+      "title": "Operating System Structure",
+      "questions": [
+        {
+          "id": "5.1",
+          "source": "Fall 2022 MC7",
+          "prompt": "Which of the following statements is NOT true in a microkernel design?",
+          "options": [
+            {
+              "label": "A",
+              "text": "New services can be added to user space without modification on the kernel"
+            },
+            {
+              "label": "B",
+              "text": "The kernel is smaller, so the performance of microkernels is better"
+            },
+            {
+              "label": "C",
+              "text": "It is more secure and reliable"
+            },
+            {
+              "label": "D",
+              "text": "It is easier to port or migrate to a new architecture"
+            }
+          ],
+          "answer": "B",
+          "explanation": "Performance of microkernels is typically worse than monolithic systems due to the high communication overhead of message passing between user-level services and the kernel."
+        },
+        {
+          "id": "5.2",
+          "source": "Spring 2024 MC7",
+          "prompt": "Which of the following statements is not an advantage in a microkernel OS design?",
+          "options": [
+            {
+              "label": "A",
+              "text": "It provides IPC to enable different OS components to interact with each other"
+            },
+            {
+              "label": "B",
+              "text": "The kernel is smaller, making it easier to port to new architecture"
+            },
+            {
+              "label": "C",
+              "text": "It is more reliable with less codes in the kernel"
+            },
+            {
+              "label": "D",
+              "text": "It is easier to add new services to the OS as they are usually outside the kernel"
+            }
+          ],
+          "answer": "A",
+          "explanation": "The necessity of IPC is a mechanism required by microkernels, but IPC overhead is a major performance disadvantage, not an advantage."
+        },
+        {
+          "id": "5.3",
+          "source": "Spring 2025 MC4",
+          "prompt": "What is a key advantage of a microkernel system structure?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Enhanced performance due to reduced overhead in system-function communication."
+            },
+            {
+              "label": "B",
+              "text": "Simplified communication between user-level services without message copying."
+            },
+            {
+              "label": "C",
+              "text": "Easier to extend and port to new hardware."
+            },
+            {
+              "label": "D",
+              "text": "Greater reliability through increased kernel size and functionality."
+            }
+          ],
+          "answer": "C",
+          "explanation": "Microkernels are easier to extend and port to new hardware because the kernel is smaller and non-essential services run in user space."
+        },
+        {
+          "id": "5.4",
+          "source": "Fall 2022 MC6",
+          "prompt": "Which of the following is TRUE in a loadable kernel module or LKM design?",
+          "options": [
+            {
+              "label": "A",
+              "text": "LKM combines the benefits of the layered and microkernel design techniques"
+            },
+            {
+              "label": "B",
+              "text": "There is no need to either recompile or reboot the kernel"
+            },
+            {
+              "label": "C",
+              "text": "LKM enables functionalities be added to and removed from the kernel while it is running"
+            },
+            { "label": "D", "text": "All of the above" }
+          ],
+          "answer": "D",
+          "explanation": "LKMs combine layered and microkernel benefits, can be loaded/unloaded without recompile or reboot, and allow adding or removing functionality while the kernel is running."
+        },
+        {
+          "id": "5.5",
+          "source": "Fall 2023 MC7",
+          "prompt": "Which of the following statements is not true in LKM design?",
+          "options": [
+            {
+              "label": "A",
+              "text": "LKM combines the benefits of the layered and microkernel design"
+            },
+            {
+              "label": "B",
+              "text": "LKM is primarily used to support device driver and file systems"
+            },
+            {
+              "label": "C",
+              "text": "LKM enables functionalities be added to and removed from the kernel while it is running"
+            },
+            {
+              "label": "D",
+              "text": "In LKM design, only core services are provided in the kernel, other services are dynamically implemented and added to user space"
+            }
+          ],
+          "answer": "D",
+          "explanation": "In LKM design, dynamically loaded modules run in kernel space, not user space. Extending services into user space is the hallmark of microkernel design."
+        },
+        {
+          "id": "5.6",
+          "source": "Spring 2022 MC7",
+          "prompt": "Which of the following statement is false about the OS structure?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The little overhead in the system-call interface and fast communication in layered structure result in a good efficiency of the system"
+            },
+            {
+              "label": "B",
+              "text": "The stability of microkernel system is better than monolithic design because the failure of a kernel does not affect other kernels."
+            },
+            {
+              "label": "C",
+              "text": "When two user-level services communicate with each other in microkernel system, message must be copied between them."
+            },
+            {
+              "label": "D",
+              "text": "Hybrid systems combine multiple approaches to address performance, security, and usability needs"
+            }
+          ],
+          "answer": "A",
+          "explanation": "The layered structure has high overhead due to traversing multiple layers. Fast communication and low overhead are characteristics of monolithic structure."
+        },
+        {
+          "id": "5.7",
+          "source": "Spring 2024 MC6",
+          "prompt": "Which of the following statements on a layered OS approach is not true?",
+          "options": [
+            {
+              "label": "A",
+              "text": "It is a modular approach that divides complex functionalities into modules"
+            },
+            {
+              "label": "B",
+              "text": "It offers the flexibility that a function can be implemented in any layer"
+            },
+            {
+              "label": "C",
+              "text": "It specifies well defined interfaces that a layer can interact with adjacent layers"
+            },
+            {
+              "label": "D",
+              "text": "It provides information hiding, in which a layer does not know how the functions are implemented in other layers. This simplifies the debugging"
+            }
+          ],
+          "answer": "B",
+          "explanation": "In a pure layered approach, functions must be assigned to strict hierarchical layers, and a layer N can only call layers below it. A function cannot be implemented in any arbitrary layer."
+        },
+        {
+          "id": "5.8",
+          "source": "Spring 2026 MC9",
+          "prompt": "Which of the following statements about a layered operating-system design is correct?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Any layer may directly access any other layer"
+            },
+            {
+              "label": "B",
+              "text": "The interfaces between adjacent layers are usually well defined"
+            },
+            {
+              "label": "C",
+              "text": "Layered design eliminates all performance overhead"
+            },
+            {
+              "label": "D",
+              "text": "Pure layered design is the dominant structure in all modern operating systems"
+            }
+          ],
+          "answer": "B",
+          "explanation": "Interfaces between adjacent layers are well-defined to provide information hiding and simplify debugging."
+        },
+        {
+          "id": "5.9",
+          "source": "Fall 2022 MC5",
+          "prompt": "Which of the following components is NOT part of Darwin?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Core services for cloud computing and database"
+            },
+            { "label": "B", "text": "Mach kernel and traps" },
+            { "label": "C", "text": "IPC mechanisms" },
+            { "label": "D", "text": "Memory management modules" }
+          ],
+          "answer": "A",
+          "explanation": "Darwin contains BSD, Mach kernel, traps, and IPC/memory management, but cloud computing and database core services are middleware or application-level frameworks, not part of the Darwin kernel."
+        },
+        {
+          "id": "5.10",
+          "source": "Spring 2025 MC6",
+          "prompt": "Which of the following is a characteristic of a monolithic kernel?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The monolithic kernel system call interface has a high overhead and communication within the kernel is slow."
+            },
+            {
+              "label": "B",
+              "text": "It separates essential components into different modules."
+            },
+            {
+              "label": "C",
+              "text": "It provides minimal services in user space."
+            },
+            {
+              "label": "D",
+              "text": "All kernel functionality is contained within a single binary file."
+            }
+          ],
+          "answer": "D",
+          "explanation": "In a monolithic structure, all kernel functionality is contained within a single binary file running in a single address space."
+        },
+        {
+          "id": "5.11",
+          "source": "Spring 2025 MC7",
+          "prompt": "A primary benefit of modular operating systems is:",
+          "options": [
+            {
+              "label": "A",
+              "text": "Faster execution times due to a streamlined design."
+            },
+            {
+              "label": "B",
+              "text": "The ability to load and unload components dynamically."
+            },
+            {
+              "label": "C",
+              "text": "Reduced security risks from limiting access."
+            },
+            {
+              "label": "D",
+              "text": "The ability to bypass the kernel for faster communication."
+            }
+          ],
+          "answer": "B",
+          "explanation": "Modular operating systems support loading and unloading components dynamically while the system is running."
+        },
+        {
+          "id": "5.12",
+          "source": "Spring 2023 MC7",
+          "prompt": "Which of the following statement is true about the system structure?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Process scheduling function is often provided by the microkernel in a microkernel operating system."
+            },
+            {
+              "label": "B",
+              "text": "The bi-directional dependency relationship between different layers allows more flexibility in a pure layered operating system."
+            },
+            {
+              "label": "C",
+              "text": "The operating system Darwin is designed in the layered approach."
+            },
+            {
+              "label": "D",
+              "text": "The performance of microkernels can greatly suffer due to the overhead of traversing through multiple layers to obtain an OS service."
+            }
+          ],
+          "answer": "A",
+          "explanation": "Microkernels provide the absolute bare minimum: process scheduling, memory management, and communications, while moving other services to user space."
+        }
+      ]
+    }
+  ]
+}
