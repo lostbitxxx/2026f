@@ -1,0 +1,170 @@
+{
+  "id": "ch5",
+  "title": "Chapter 5 Past Midterm Question Bank",
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Topic 1: Basic CPU Scheduling Concepts & Scheduling Criteria",
+      "questions": [
+        {
+          "id": "1.1",
+          "type": "mc",
+          "source": "2021 Fall MC18",
+          "prompt": "Which of the following events will **NOT** trigger scheduling in a non-preemptive scheduling scheme?",
+          "options": [
+            { "label": "A", "text": "A process completes its CPU burst time" },
+            { "label": "B", "text": "A process arrives on the ready queue" },
+            { "label": "C", "text": "A process initiates an I/O operation" },
+            { "label": "D", "text": "A process waits on a signal and blocks itself" }
+          ],
+          "answer": "B",
+          "explanation": "In non-preemptive scheduling, a running process only yields the CPU when it voluntarily relinquishes control (completes its burst, initiates I/O, or blocks). The arrival of a new process on the ready queue does not interrupt the running process."
+        },
+        {
+          "id": "1.2",
+          "type": "mc",
+          "source": "2022 Spring MC18",
+          "prompt": "Which of the following time units are included in the dispatch latency during context switching between processes $P_0$ and $P_1$?",
+          "options": [
+            { "label": "A", "text": "P0 executing" },
+            { "label": "B", "text": "Save state into PCB0, and restore state from PCB1" },
+            { "label": "C", "text": "P1 executing" },
+            { "label": "D", "text": "All of the above" }
+          ],
+          "answer": "B",
+          "explanation": "Dispatch latency is the overhead spent by the dispatcher to stop process $P_0$ (saving its state into $PCB_0$) and resume process $P_1$ (restoring its state from $PCB_1$). It excludes actual user-process execution time."
+        },
+        {
+          "id": "1.3-1",
+          "type": "mc",
+          "source": "2023 Fall MC20",
+          "prompt": "Consider a system running 10 I/O-bound processes and 1 CPU-bound process. Each I/O-bound process executes for 10 units of time before issuing an I/O operation (which takes 100 units). Context-switching cost is 1 unit of time.\n\nWhat is the effective CPU utilization for a Round-Robin scheduler with time quantum $q = 10$?",
+          "options": [
+            { "label": "A", "text": "85%" },
+            { "label": "B", "text": "88%" },
+            { "label": "C", "text": "91%" },
+            { "label": "D", "text": "94%" }
+          ],
+          "answer": "C",
+          "explanation": "Every execution chunk of 10 time units incurs 1 unit of context-switch overhead. The CPU spends 10 units on useful work out of every $10 + 1 = 11$ units.\n\n$$\\text{Effective Utilization} = \\frac{10}{10 + 1} = \\frac{10}{11} \\approx 90.9\\% \\approx 91\\%$$"
+        },
+        {
+          "id": "1.3-2",
+          "type": "mc",
+          "source": "2023 Fall MC21",
+          "prompt": "Consider a system running 10 I/O-bound processes and 1 CPU-bound process. Each I/O-bound process executes for 10 units of time before issuing an I/O operation (which takes 100 units). Context-switching cost is 1 unit of time.\n\nWhat is the effective CPU utilization if the time quantum is $q = 100$?",
+          "options": [
+            { "label": "A", "text": "85%" },
+            { "label": "B", "text": "94%" },
+            { "label": "C", "text": "75%" },
+            { "label": "D", "text": "91%" }
+          ],
+          "answer": "B",
+          "explanation": "The 10 I/O-bound processes run for 10 units each before issuing I/O, each incurring 1 unit of switch cost: $10 \\times (10 + 1) = 110$ units. The CPU-bound process uses the full quantum of 100 units plus 1 unit of switch cost: $100 + 1 = 101$ units.\n\n- Useful CPU time per cycle $= 10 \\times 10 + 100 = 200$.\n- Elapsed time per cycle $= 110 + 101 = 211$.\n\n$$\\text{Effective Utilization} = \\frac{200}{211} \\approx 94.8\\% \\approx 94\\%$$"
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "Topic 2: Standard Scheduling Algorithms (FCFS, SJF, SRTF, Priority, RR)",
+      "questions": [
+        {
+          "id": "2.1-1",
+          "type": "mc",
+          "source": "2021 Spring MC4 & 2022 Fall MC17/MC18 & 2025 Spring MC17",
+          "prompt": "Which scheduling algorithm MUST be non-preemptive?",
+          "options": [
+            { "label": "A", "text": "FCFS" },
+            { "label": "B", "text": "SJF" },
+            { "label": "C", "text": "Priority Scheduling" },
+            { "label": "D", "text": "Multilevel Feedback Queue" }
+          ],
+          "answer": "A",
+          "explanation": "FCFS is strictly non-preemptive. SJF, priority scheduling, and multilevel feedback queue can be preemptive."
+        },
+        {
+          "id": "2.1-2",
+          "type": "mc",
+          "source": "2021 Spring MC4 & 2022 Fall MC17/MC18 & 2025 Spring MC17",
+          "prompt": "Which scheduling algorithm suffers from the convoy effect?",
+          "options": [
+            { "label": "A", "text": "SJF" },
+            { "label": "B", "text": "FCFS" },
+            { "label": "C", "text": "Round Robin" },
+            { "label": "D", "text": "Priority" }
+          ],
+          "answer": "B",
+          "explanation": "FCFS suffers from the convoy effect: short processes wait behind a long CPU-bound process."
+        },
+        {
+          "id": "2.1-3",
+          "type": "mc",
+          "source": "2021 Spring MC4 & 2022 Fall MC17/MC18 & 2025 Spring MC17",
+          "prompt": "Which statement is NOT true regarding SJF vs. SRTF?",
+          "options": [
+            { "label": "A", "text": "SRTF is a preemptive version of SJF" },
+            { "label": "B", "text": "SRTF performs no worse than SJF in average waiting time" },
+            { "label": "C", "text": "SRTF may incur more context switches than SJF" },
+            { "label": "D", "text": "None of the above" }
+          ],
+          "answer": "D",
+          "explanation": "Statements A, B, and C are all true, so the choice that is not true is none of them."
+        },
+        {
+          "id": "2.2",
+          "type": "open",
+          "source": "2022 Spring Midterm Problem 2.1 & 2025 Spring Midterm Problem 4.1",
+          "prompt": "Consider 5 processes. The tie-breaker is the lower process ID. Calculate the average turnaround time for FCFS, non-preemptive SJF, preemptive priority scheduling with round robin (quantum = 2 ms), and SRTF.\n\n| Process | Arrival Time (ms) | Burst Time (ms) | Priority (1 = highest) |\n| :---: | :---: | :---: | :---: |\n| $P_1$ | 0 | 5 | 2 |\n| $P_2$ | 1 | 3 | 1 |\n| $P_3$ | 4 | 8 | 2 |\n| $P_4$ | 8 | 2 | 1 |\n| $P_5$ | 10 | 6 | 2 |",
+          "answer": "1. **FCFS**\n\nGantt: `| P1 (0-5) | P2 (5-8) | P3 (8-16) | P4 (16-18) | P5 (18-24) |`\n\nTurnaround: $P_1 = 5$, $P_2 = 7$, $P_3 = 12$, $P_4 = 10$, $P_5 = 14$.\n\n$$\\text{Average} = \\frac{5 + 7 + 12 + 10 + 14}{5} = 9.6 \\text{ ms}$$\n\n2. **SJF (non-preemptive)**\n\n$P_1$ runs $0 \\to 5$. Then $P_2$ ($5 \\to 8$), $P_4$ ($8 \\to 10$), $P_5$ ($10 \\to 16$), $P_3$ ($16 \\to 24$).\n\nGantt: `| P1 (0-5) | P2 (5-8) | P4 (8-10) | P5 (10-16) | P3 (16-24) |`\n\nTurnaround: $P_1 = 5$, $P_2 = 7$, $P_3 = 20$, $P_4 = 2$, $P_5 = 6$.\n\n$$\\text{Average} = \\frac{5 + 7 + 20 + 2 + 6}{5} = 8.0 \\text{ ms}$$\n\n3. **Preemptive priority with RR ($q = 2$ ms)**\n\nGantt: `| P1(0-1) | P2(1-4) | P1(4-6) | P3(6-8) | P4(8-10) | P1(10-11) | P3(11-13) | P5(13-15) | P3(15-17) | P5(17-19) | P3(19-21) | P5(21-23) |`\n\nCompletion: $P_1 = 11$, $P_2 = 4$, $P_3 = 21$, $P_4 = 10$, $P_5 = 23$.\n\nTurnaround: $P_1 = 11$, $P_2 = 3$, $P_3 = 17$, $P_4 = 2$, $P_5 = 13$.\n\n$$\\text{Average} = \\frac{11 + 3 + 17 + 2 + 13}{5} = 9.2 \\text{ ms}$$\n\n4. **SRTF**\n\nGantt: `| P1 (0-1) | P2 (1-4) | P1 (4-8) | P4 (8-10) | P5 (10-16) | P3 (16-24) |`\n\nTurnaround: $P_1 = 8$, $P_2 = 3$, $P_3 = 20$, $P_4 = 2$, $P_5 = 6$.\n\n$$\\text{Average} = \\frac{8 + 3 + 20 + 2 + 6}{5} = 7.8 \\text{ ms}$$"
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "Topic 3: Multilevel Queue & Multilevel Feedback Queue (MLFQ)",
+      "questions": [
+        {
+          "id": "3.1",
+          "type": "open",
+          "source": "2025 Spring Short Q2",
+          "prompt": "Explain the concept of multilevel queue scheduling and how it differs from multilevel feedback queue scheduling.",
+          "answer": "- **Multilevel queue**: Partitions processes into fixed queues based on process type. Assignment is **permanent**, and processes cannot move between queues.\n- **Multilevel feedback queue (MLFQ)**: Lets processes **move between queues** based on their execution behavior (CPU-bound vs. I/O-bound). That adapts the schedule and improves response time without requiring the burst length in advance."
+        },
+        {
+          "id": "3.2",
+          "type": "open",
+          "source": "2023 Fall Midterm Problem 3.1",
+          "prompt": "Consider a 3-level feedback queue:\n\n- $Q_0$: RR with quantum $q = 8$ ms\n- $Q_1$: RR with quantum $q = 12$ ms\n- $Q_2$: FCFS\n\nRules:\n\n1. New processes enter $Q_0$. Higher-priority queues ($Q_0 > Q_1 > Q_2$) preempt lower ones.\n2. A process that uses its full quantum in $Q_0$ moves to $Q_1$. A process that uses its full quantum in $Q_1$ moves to $Q_2$.\n3. When a lower-queue process is preempted by a new arrival in $Q_0$, it returns to the **head of its current queue** with its **remaining quantum intact**.\n\n| Process | Arrival Time (ms) | Burst Time (ms) |\n| :---: | :---: | :---: |\n| $P_1$ | 0 | 12 |\n| $P_2$ | 5 | 50 |\n| $P_3$ | 24 | 3 |\n| $P_4$ | 30 | 23 |\n| $P_5$ | 33 | 26 |\n| $P_6$ | 55 | 10 |\n\nCalculate the Gantt chart, the average waiting time, and the average response time.",
+          "answer": "**Gantt chart**\n\n`| P1(0-8) | P2(8-16) | P1(16-20) | P2(20-24) | P3(24-27) | P2(27-30) | P4(30-38) | P5(38-46) | P2(46-51) | P4(51-55) | P6(55-63) | P4(63-71) | P5(71-83) | P6(83-85) | P2(85-115) | P4(115-118) | P5(118-124) |`\n\n**Waiting time** ($T_{comp} - T_{arr} - T_{burst}$)\n\n- $P_1 = 20 - 0 - 12 = 8$\n- $P_2 = 115 - 5 - 50 = 60$\n- $P_3 = 27 - 24 - 3 = 0$\n- $P_4 = 118 - 30 - 23 = 65$\n- $P_5 = 124 - 33 - 26 = 65$\n- $P_6 = 75 - 55 - 10 = 20$\n\n$$\\text{Average waiting time} = \\frac{8 + 60 + 0 + 65 + 65 + 20}{6} = \\frac{218}{6} \\approx 36.33 \\text{ ms}$$\n\n**Response time** ($T_{first\\_run} - T_{arr}$)\n\n- $P_1 = 0$, $P_2 = 3$, $P_3 = 0$, $P_4 = 0$, $P_5 = 5$, $P_6 = 0$\n\n$$\\text{Average response time} = \\frac{0 + 3 + 0 + 0 + 5 + 0}{6} = 1.33 \\text{ ms}$$"
+        }
+      ]
+    },
+    {
+      "id": "topic-4",
+      "title": "Topic 4: Real-Time CPU Scheduling (RM & EDF)",
+      "questions": [
+        {
+          "id": "4.1",
+          "type": "mc",
+          "source": "2022 Spring MC21 & 2023 Spring MC19 & 2025 Spring MC19",
+          "prompt": "Which of the following statements is **TRUE** for Rate-Monotonic (RM) and Earliest-Deadline-First (EDF) scheduling?",
+          "options": [
+            { "label": "A", "text": "RM uses a dynamic priority policy." },
+            { "label": "B", "text": "Both RM and EDF are non-preemptive." },
+            { "label": "C", "text": "The rationale for RM is to assign higher priority to tasks requiring CPU more often (shorter period)." },
+            { "label": "D", "text": "EDF uses a static priority policy." }
+          ],
+          "answer": "C",
+          "explanation": "RM uses a static priority based on period: a shorter period means a higher priority. EDF uses a dynamic priority based on deadlines. Both are preemptive."
+        },
+        {
+          "id": "4.2",
+          "type": "open",
+          "source": "2022 Fall Midterm Problem 3.3 & 2024 Spring Midterm Problem 4.2",
+          "prompt": "Four periodic processes arrive at $t = 0$. Fill in the running process for timeslots $t = 0 \\dots 19$ under **RM** and **EDF**, and state how many deadlines are missed.\n\n| Process | Processing Time ($C_i$) | Deadline ($D_i$) | Period ($T_i$) | Priority in RM |\n| :---: | :---: | :---: | :---: | :---: |\n| $P_1$ | 1 | 4 | 5 | Priority 1 (highest, $T = 5$) |\n| $P_2$ | 3 | 7 | 10 | Priority 3 ($T = 10$) |\n| $P_3$ | 2 | 13 | 16 | Priority 4 (lowest, $T = 16$) |\n| $P_4$ | 2 | 8 | 8 | Priority 2 ($T = 8$) |",
+          "answer": "**Rate-monotonic** ($T_1 = 5 < T_4 = 8 < T_2 = 10 < T_3 = 16$, so $P_1 > P_4 > P_2 > P_3$)\n\n- $t = 0..1$: $P_1$\n- $t = 1..3$: $P_4$\n- $t = 3..5$: $P_2$ (preempted at $t = 5$ by the next $P_1$)\n- $t = 5..6$: $P_1$\n- $t = 6..7$: $P_2$ finishes its third unit\n- $t = 7..8$: $P_3$\n- $t = 8..10$: $P_4$ (period 2)\n- $t = 10..11$: $P_1$ (period 3)\n- $t = 11..14$: $P_2$ (period 2)\n- $t = 14..15$: $P_3$ finishes its second unit\n\n$P_3$'s first instance arrived at $t = 0$ with deadline $13$, but it finishes at $t = 15$. **RM misses 1 deadline.**\n\n**Earliest-deadline-first**\n\nAt $t = 0$ the absolute deadlines are $P_1: 4$, $P_2: 7$, $P_4: 8$, $P_3: 13$.\n\n- $t = 0..1$: $P_1$\n- $t = 1..4$: $P_2$\n- $t = 4..6$: $P_4$\n- $t = 6..7$: the next $P_1$ (deadline $5 + 4 = 9$)\n- $t = 7..9$: $P_3$\n- Later arrivals, including $P_4$ at $t = 8$ (deadline $16$), still meet their deadlines.\n\n**EDF misses 0 deadlines.**"
+        }
+      ]
+    }
+  ]
+}

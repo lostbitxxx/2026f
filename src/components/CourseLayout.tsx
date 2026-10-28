@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { type CourseSlug, courses } from "@/lib/courses";
-import { getChapters, hasContent } from "@/lib/content";
+import { getChapters, getNote, hasContent } from "@/lib/content";
 import { BrutalCard } from "./BrutalCard";
 
 type CourseLayoutProps = {
@@ -10,6 +10,7 @@ type CourseLayoutProps = {
 export function CourseLayout({ slug }: CourseLayoutProps) {
   const course = courses[slug];
   const chapters = getChapters(slug);
+  const noteChapters = chapters.filter((chapter) => getNote(slug, chapter.id));
   const contentAvailable = hasContent(slug);
 
   return (
@@ -62,9 +63,9 @@ export function CourseLayout({ slug }: CourseLayoutProps) {
           <h2 className="mb-4 text-xl font-bold uppercase tracking-wider">
             Notes
           </h2>
-          {contentAvailable ? (
+          {noteChapters.length > 0 ? (
             <ul className="flex flex-col gap-3">
-              {chapters.map((chapter) => (
+              {noteChapters.map((chapter) => (
                 <li key={chapter.id}>
                   <Link
                     href={`/courses/${slug}/notes/${chapter.id}`}

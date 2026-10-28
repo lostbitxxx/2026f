@@ -1,0 +1,191 @@
+{
+  "id": "ch3",
+  "title": "Chapter 3 Past Midterm Question Bank",
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Topic 1: Process Concepts, Address Space & Process States",
+      "questions": [
+        {
+          "id": "1.1",
+          "type": "mc",
+          "source": "2021 Fall MC7",
+          "prompt": "Which of the following components is **not** considered to be part of the address space of a process?",
+          "options": [
+            { "label": "A", "text": "Registers" },
+            { "label": "B", "text": "Program or text section" },
+            { "label": "C", "text": "Data section" },
+            { "label": "D", "text": "Heap" }
+          ],
+          "answer": "A",
+          "explanation": "Registers reside on the CPU hardware architecture (part of the CPU context saved in the PCB), whereas text, data, heap, and stack form the virtual address space in memory."
+        },
+        {
+          "id": "1.2",
+          "type": "mc",
+          "source": "2022 Spring MC8",
+          "prompt": "Which of the following options is a process state change when the scheduler selects a program from the ready queue to run?",
+          "options": [
+            { "label": "A", "text": "running → ready" },
+            { "label": "B", "text": "ready → running" },
+            { "label": "C", "text": "running → waiting" },
+            { "label": "D", "text": "waiting → ready" }
+          ],
+          "answer": "B",
+          "explanation": "Selecting a process from the ready queue and dispatching it to a CPU core changes its state from Ready to Running."
+        },
+        {
+          "id": "1.3",
+          "type": "mc",
+          "source": "2025 Spring MC8",
+          "prompt": "In the Linux operating system, how is the list of processes maintained?",
+          "options": [
+            { "label": "A", "text": "It uses a list of TCBs organized in a binary tree." },
+            { "label": "B", "text": "It stores processes in a hash table keyed by executable file names." },
+            { "label": "C", "text": "It maintains a circular doubly linked list called task_list, where each element is a struct task_struct." },
+            { "label": "D", "text": "It uses a single global structure named Kernel Struct." }
+          ],
+          "answer": "C",
+          "explanation": "Linux represents every process descriptor using `struct task_struct` maintained within the kernel `task_list` circular doubly linked list."
+        },
+        {
+          "id": "1.4",
+          "type": "mc",
+          "source": "2025 Spring MC10",
+          "prompt": "What happens during process creation in UNIX/Linux?",
+          "options": [
+            { "label": "A", "text": "A new address space is allocated." },
+            { "label": "B", "text": "A new PCB is created." },
+            { "label": "C", "text": "The system initializes the program's stack and heap." },
+            { "label": "D", "text": "All of the above." }
+          ],
+          "answer": "D",
+          "explanation": "Process creation requires initializing a kernel PCB, setting up an address space, and allocating memory regions (stack, heap, and so on)."
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "Topic 2: Context Switching & CPU Switching",
+      "questions": [
+        {
+          "id": "2.1",
+          "type": "mc",
+          "source": "2022 Spring MC18",
+          "prompt": "Consider context switching between processes $P_0$ and $P_1$. Which of the following time units are included in the dispatch latency during context switching?",
+          "options": [
+            { "label": "A", "text": "P0 executing" },
+            { "label": "B", "text": "Save state into PCB0, and restore state from PCB1" },
+            { "label": "C", "text": "P1 executing" },
+            { "label": "D", "text": "All of the above" }
+          ],
+          "answer": "B",
+          "explanation": "Dispatch latency measures the overhead time required to stop $P_0$, save $P_0$'s state into $PCB_0$, and load $P_1$'s state from $PCB_1$ before $P_1$ begins execution."
+        },
+        {
+          "id": "2.2",
+          "type": "open",
+          "source": "2025 Spring Short Q1",
+          "prompt": "What is a context switch, and how does it affect the performance of a system?",
+          "answer": "1. **Definition**: A context switch occurs when the CPU switches from executing one process to another. It involves saving the hardware state (program counter, CPU registers) of the current process into its PCB and loading the saved state of the target process from its PCB.\n2. **Performance impact**: Context switching introduces pure overhead because no useful work is performed while switching contexts. Frequent context switching degrades overall system performance."
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "Topic 3: Process Operations (fork, exec, wait, exit, Zombie & Orphan)",
+      "questions": [
+        {
+          "id": "3.1",
+          "type": "mc",
+          "source": "2023 Fall MC9",
+          "prompt": "In process creation with `fork()`, which of the following events is **impossible**?",
+          "options": [
+            { "label": "A", "text": "The child process runs concurrently with the parent process." },
+            { "label": "B", "text": "The child process calls wait() to wait for the completion of the parent process." },
+            { "label": "C", "text": "The child process calls exec() to load a new program into it." },
+            { "label": "D", "text": "The child process runs an identical program with the parent process." }
+          ],
+          "answer": "B",
+          "explanation": "In the standard UNIX process hierarchy, the parent calls `wait()` to wait for child completion, not the child waiting for the parent."
+        },
+        {
+          "id": "3.2",
+          "type": "mc",
+          "source": "2022 Spring MC10 & 2023 Fall MC10",
+          "prompt": "Which of the following is true about zombie and orphan processes?",
+          "options": [
+            { "label": "A", "text": "A parent process waiting for a terminated child is called a zombie." },
+            { "label": "B", "text": "If a parent process terminated without invoking wait(), the parent becomes an orphan." },
+            { "label": "C", "text": "A zombie process is a process that has been terminated, but not yet taken care of by the parent process." },
+            { "label": "D", "text": "An orphan process is caused by a wait() function called too early." }
+          ],
+          "answer": "C",
+          "explanation": "A zombie is a terminated child waiting for its parent to read its exit status via `wait()`. An orphan is a running child whose parent terminated."
+        },
+        {
+          "id": "3.3",
+          "type": "mc",
+          "source": "2022 Fall MC11",
+          "prompt": "What is the total number of processes created in the following C code if all `fork()` calls are successful?\n\n```c\nint main() {\n    if (fork() > 0) {\n        if (fork() == 0)\n            fork();\n    }\n    return 0;\n}\n```",
+          "options": [
+            { "label": "A", "text": "3" },
+            { "label": "B", "text": "4" },
+            { "label": "C", "text": "5" },
+            { "label": "D", "text": "6" }
+          ],
+          "answer": "B",
+          "explanation": "There are 4 processes in total.\n\n1. Start with parent $P_0$.\n2. The first `fork()` creates child $C_1$. $P_0$ gets a return value $> 0$ and enters the `if`. $C_1$ gets `0` and skips the `if`.\n3. The second `fork()`, executed by $P_0$, creates child $C_2$. $P_0$ gets a return value $> 0$ and skips the inner `if`. $C_2$ gets `0` and enters the inner `if`.\n4. The third `fork()`, executed by $C_2$, creates grandchild $G_1$.\n\nTotal processes $= P_0 + C_1 + C_2 + G_1 = 4$."
+        },
+        {
+          "id": "3.4",
+          "type": "open",
+          "source": "2021 Fall Calc Q2",
+          "prompt": "Complete the C program to implement the shell redirection `wc -l < input.txt > output.txt`.\n\n```c\nint fd_in = open(\"input.txt\", O_RDONLY, perm);\nint fd_out = open(\"output.txt\", O_CREAT | O_WRONLY, perm);\nclose(1);\nBLANK1; // Redirect output.txt to STDOUT (fd 1)\nclose(0);\nBLANK2; // Redirect input.txt to STDIN (fd 0)\nexecvp(BLANK3, BLANK4);\n```",
+          "answer": "- **BLANK1**: `dup2(fd_out, 1);` (or `dup(fd_out);`)\n- **BLANK2**: `dup2(fd_in, 0);` (or `dup(fd_in);`)\n- **BLANK3**: `args[0]`\n- **BLANK4**: `args`"
+        }
+      ]
+    },
+    {
+      "id": "topic-4",
+      "title": "Topic 4: Interprocess Communication (IPC) & Pipes",
+      "questions": [
+        {
+          "id": "4.1",
+          "type": "mc",
+          "source": "2021 Fall MC9, 2023 Fall MC11 & 2025 Spring MC11",
+          "prompt": "Which of the following statements about ordinary pipes is **incorrect**?",
+          "options": [
+            { "label": "A", "text": "A single ordinary pipe enables a parent and a child process to send messages to each other in a bi-directional manner." },
+            { "label": "B", "text": "Reading and writing to ordinary pipes are performed like file I/O." },
+            { "label": "C", "text": "Ordinary pipes cease to exist after the communicating processes have finished execution." },
+            { "label": "D", "text": "Ordinary pipes cannot facilitate communication between two unrelated processes." }
+          ],
+          "answer": "A",
+          "explanation": "Ordinary pipes are strictly unidirectional. For bidirectional communication, two separate ordinary pipes are required."
+        },
+        {
+          "id": "4.2",
+          "type": "mc",
+          "source": "2022 Spring MC9",
+          "prompt": "Which statement about processes and pipes is false?",
+          "options": [
+            { "label": "A", "text": "Named pipes on Windows can only be used by communicating processes on the same machine." },
+            { "label": "B", "text": "Several processes can communicate using a named pipe." },
+            { "label": "C", "text": "There is no parent-child relationship in the named pipe." },
+            { "label": "D", "text": "Named pipe can be accessed without a parent-child relationship." }
+          ],
+          "answer": "A",
+          "explanation": "Named pipes on Windows support network communication across different machines (full-duplex network IPC)."
+        },
+        {
+          "id": "4.3",
+          "type": "open",
+          "source": "2023 Fall Calc Q3",
+          "prompt": "Complete the program that establishes 2-way IPC between a parent and a child using two ordinary pipes, `p2c` (parent-to-child) and `c2p` (child-to-parent).",
+          "answer": "```c\nint p2c[2], c2p[2];\npipe(p2c);\npipe(c2p);\npid_t pid = fork();\n\nif (pid == 0) { // Child Process\n    close(c2p[0]); // Close unused read-end of c2p\n    write(c2p[1], \"Child\", 5); // Write to parent\n    close(p2c[1]); // Close unused write-end of p2c\n    read(p2c[0], buffer, 6); // Read from parent\n} else { // Parent Process\n    close(c2p[1]); // Close unused write-end of c2p\n    read(c2p[0], buffer, 5); // Read from child\n    close(p2c[0]); // Close unused read-end of p2c\n    write(p2c[1], \"Parent\", 6); // Write to child\n}\n```"
+        }
+      ]
+    }
+  ]
+}

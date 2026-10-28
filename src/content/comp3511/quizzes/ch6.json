@@ -1,0 +1,149 @@
+{
+  "id": "ch6",
+  "title": "Chapter 6 Past Midterm Question Bank",
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Topic 1: Critical Section Problem, Race Conditions & Essential Requirements",
+      "questions": [
+        {
+          "id": "1.1",
+          "type": "mc",
+          "source": "2021 Spring MC3 & 2022 Spring MC23 & 2023 Spring MC21",
+          "prompt": "Which of the following statements about a **race condition** is **TRUE**?",
+          "options": [
+            { "label": "A", "text": "A race condition will result only if the outcome of execution does not depend on the order in which instructions are executed." },
+            { "label": "B", "text": "A race condition results when several threads try to access the same data concurrently without modifying it." },
+            { "label": "C", "text": "A race condition results when several threads try to access and modify the same shared data concurrently." },
+            { "label": "D", "text": "None of the above." }
+          ],
+          "answer": "C",
+          "explanation": "A race condition requires concurrent access **and modification** of shared data, where the outcome depends on the execution order. Concurrent reading alone does not produce a race condition."
+        },
+        {
+          "id": "1.2",
+          "type": "mc",
+          "source": "2021 Fall MC23 & 2021 Spring MC2 & 2025 Spring MC23",
+          "prompt": "A valid solution to the critical-section problem does **NOT** have to satisfy which of the following requirements?",
+          "options": [
+            { "label": "A", "text": "Mutual exclusion" },
+            { "label": "B", "text": "Atomicity" },
+            { "label": "C", "text": "Progress" },
+            { "label": "D", "text": "Bounded waiting" }
+          ],
+          "answer": "B",
+          "explanation": "The three requirements are **mutual exclusion**, **progress**, and **bounded waiting**. Atomicity is a property of the hardware operations used to implement synchronization, not a required property of the solution itself."
+        },
+        {
+          "id": "1.3",
+          "type": "open",
+          "source": "2022 Fall Midterm Problem 3.1",
+          "prompt": "Two threads perform non-atomic `counter++` and `counter--` on a shared `counter` that starts at 10:\n\n```c\n// Thread 1: counter++\nregister1 = counter;\nregister1 = register1 + 1;\ncounter = register1;\n\n// Thread 2: counter--\nregister2 = counter;\nregister2 = register2 - 1;\ncounter = register2;\n```\n\nWhat are all possible final values of `counter` when both threads terminate?",
+          "answer": "**9, 10, and 11.**\n\n1. **10** — Thread 1 runs completely ($10 \\rightarrow 11$), then Thread 2 runs completely ($11 \\rightarrow 10$).\n2. **11** — both threads read 10. Thread 2 writes 9, then Thread 1 writes its register value 11.\n3. **9** — both threads read 10. Thread 1 writes 11, then Thread 2 writes its register value 9."
+        },
+        {
+          "id": "1.4",
+          "type": "open",
+          "source": "2023 Spring Midterm Problem 3.1",
+          "prompt": "Two threads run the following code concurrently. Shared variables start at `a = 1`, `b = 3`, `c = 0`. Reads and writes of a single variable are atomic, and each thread keeps its own statement order.\n\n```c\n// Thread 1\na = b + 1;\nc = a - b;\n\n// Thread 2\na = 13;\nb = 10;\nc = 2;\n```\n\nWhat are all possible final values of `c`?",
+          "answer": "The solution key lists **-6, -9, 2, and 4**.\n\n- Thread 2 runs to completion, then Thread 1: Thread 2 sets `a = 13`, `b = 10`, `c = 2`. Thread 1 then sets `a = 11` and `c = 11 - 10 = 1`.\n- Thread 1 runs to completion, then Thread 2: Thread 1 sets `a = 4` and `c = 1`. Thread 2 then sets `c = 2`, so the final value is 2.\n- Thread 1 computes `a = 4`, Thread 2 sets `b = 10`, and Thread 1 then evaluates `c = 4 - 10 = -6`.\n- Other interleavings in the walkthrough also produce 1 and 3, depending on which write to `a`, `b`, or `c` happens last."
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "Topic 2: Hardware Synchronization Support & Atomic Primitives",
+      "questions": [
+        {
+          "id": "2.1",
+          "type": "open",
+          "source": "2021 Spring Midterm Problem 3.1",
+          "prompt": "Assume `compare_and_reset()` is atomic:\n\n```c\nint compare_and_reset(int *a, int old, int new_val) {\n    if (*a == old) {\n        *a = new_val;\n        return 1;\n    } else {\n        return 0;\n    }\n}\n```\n\nImplement a simple spinlock and its `acquire` and `release` functions.",
+          "answer": "```c\nstruct spinlock {\n    int value; // 0 = unlocked, 1 = locked\n};\n\nvoid acquire(struct spinlock *lock) {\n    while (compare_and_reset(&lock->value, 0, 1) == 0) {\n        /* spin here (busy wait) */\n        ;\n    }\n}\n\nvoid release(struct spinlock *lock) {\n    lock->value = 0;\n}\n```"
+        },
+        {
+          "id": "2.2",
+          "type": "open",
+          "source": "2025 Spring Short Question 2.5",
+          "prompt": "A bounded-waiting mutual-exclusion algorithm uses `test_and_set()`. The exit section was changed so that `lock = false` happens **before** `waiting[j] = false`:\n\n```c\n// Initialization: boolean lock = false; boolean waiting[n] = {false};\n// Process Pi:\ndo {\n    waiting[i] = true;\n    key = true;\n    while (waiting[i] && key)\n        key = test_and_set(&lock);\n    waiting[i] = false;\n\n    /* critical section */\n\n    j = (i + 1) % n;\n    while ((j != i) && !waiting[j])\n        j = (j + 1) % n;\n\n    if (j == i)\n        lock = false;\n    else {\n        lock = false;\n        waiting[j] = false;\n    }\n    /* remainder section */\n} while (true);\n```\n\nWhich essential property does this change violate, and how?",
+          "answer": "**Mutual exclusion** is violated.\n\n1. $P_i$ leaves its critical section, finds $P_j$ waiting, and sets `lock = false`.\n2. Before $P_i$ executes `waiting[j] = false`, a third process $P_k$ that is spinning on `test_and_set(&lock)` sees the lock free, acquires it, and enters the critical section.\n3. $P_i$ then sets `waiting[j] = false`. $P_j$ leaves its wait loop and also enters the critical section.\n4. $P_k$ and $P_j$ are in their critical sections at the same time."
+        },
+        {
+          "id": "2.3",
+          "type": "mc",
+          "source": "2022 Spring MC23",
+          "prompt": "Which of the following statements regarding **spinlocks** is **FALSE**?",
+          "options": [
+            { "label": "A", "text": "Spinlocks incur busy waiting." },
+            { "label": "B", "text": "Spinlocks are useful in both single-processor and multiprocessor systems." },
+            { "label": "C", "text": "Spinlocks are effective when the lock is held by a running process on another CPU core." },
+            { "label": "D", "text": "Spinlocks waste CPU cycles during waiting." }
+          ],
+          "answer": "B",
+          "explanation": "On a single processor, a process spinning on the CPU keeps the lock holder from running and releasing the lock. Spinlocks are useful on multiprocessors, where the holder can run on another core."
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "Topic 3: Mutex Locks & Semaphores",
+      "questions": [
+        {
+          "id": "3.1",
+          "type": "mc",
+          "source": "2021 Fall MC24 & 2022 Spring MC24 & 2023 Spring MC24",
+          "prompt": "When semaphores protect a critical section, a process normally calls `wait(S)` before entering and `signal(S)` after leaving. What can happen if a process reverses that order, calling `signal(S)` first and then `wait(S)`?",
+          "options": [
+            { "label": "A", "text": "Deadlock is guaranteed to occur." },
+            { "label": "B", "text": "Mutual exclusion is still preserved." },
+            { "label": "C", "text": "Multiple processes could be executing in their critical sections at the same time." },
+            { "label": "D", "text": "The calling process will get stuck immediately." }
+          ],
+          "answer": "C",
+          "explanation": "Calling `signal(S)` first increments the semaphore (for example from 1 to 2). Another process can then pass `wait(S)` and enter its critical section at the same time, so mutual exclusion is lost."
+        },
+        {
+          "id": "3.2",
+          "type": "mc",
+          "source": "2022 Spring MC25",
+          "prompt": "The following code makes three threads run their critical sections in the order $T_1 \\rightarrow T_2 \\rightarrow T_3 \\rightarrow T_1 \\rightarrow \\cdots$\n\n```c\n// Thread 1:          // Thread 2:          // Thread 3:\nwait(S1);             wait(S2);             wait(S3);\n/* critical section */ /* critical section */ /* critical section */\nsignal(S2);           signal(S3);           signal(S1);\n```\n\nWhat must the initial values of $S_1, S_2, S_3$ be?",
+          "options": [
+            { "label": "A", "text": "S1 = 1, S2 = 1, S3 = 1" },
+            { "label": "B", "text": "S1 = 0, S2 = 1, S3 = 0" },
+            { "label": "C", "text": "S1 = 1, S2 = 0, S3 = 0" },
+            { "label": "D", "text": "S1 = 0, S2 = 0, S3 = 1" }
+          ],
+          "answer": "C",
+          "explanation": "$S_1$ must start at 1 so $T_1$ can pass `wait(S1)` immediately. $S_2$ and $S_3$ must start at 0 so $T_2$ and $T_3$ block until $T_1$ and $T_2$ signal them."
+        },
+        {
+          "id": "3.3",
+          "type": "open",
+          "source": "2022 Spring Midterm Problem 4.1",
+          "prompt": "Processes $A$ and $B$ share semaphores $X$ and $Y$, both initialized to 0.\n\n```c\n// Process A:\nwait(X);\nprintf(\"b\");\nsignal(Y);\nwait(Y);\nprintf(\"c\");\nsignal(Y);\n\n// Process B:\nsignal(X);\nprintf(\"a\");\nwait(Y);\nprintf(\"d\");\n```\n\nWhat are all possible printed outputs when both processes finish?",
+          "answer": "`abcd`, `bacd`, and `bcad`.\n\n$B$ must `signal(X)` before $A$ can pass `wait(X)` and print `b`. `a` is printed after that signal. `signal(Y)` in $A$ is what lets the later `wait(Y)` calls proceed, so `c` and `d` come after `b`.\n\n- `abcd`: $B$ prints `a`, $A$ prints `b`, $A$ signals $Y$, $A$ prints `c`, $B$ prints `d`.\n- `bacd`: $A$ prints `b`, $B$ prints `a`, then `c`, then `d`.\n- `bcad`: $A$ prints `b`, signals $Y$, prints `c`, then $B$ prints `a` and `d`."
+        }
+      ]
+    },
+    {
+      "id": "topic-4",
+      "title": "Topic 4: Classic Synchronization Problems & Barrier Synchronization",
+      "questions": [
+        {
+          "id": "4.1",
+          "type": "open",
+          "source": "2022 Spring Midterm Problem 3.2",
+          "prompt": "Writers can starve in the standard readers-writers problem if readers keep arriving. An extra semaphore `w` (initialized to 1) is added for FCFS order. Complete `writer()` and `reader()`.\n\n```c\nint read_count = 0;\nsemaphore mutex = 1;\nsemaphore rw_mutex = 1;\nsemaphore w = 1;\n\nvoid writer() {\n    while (1) {\n        wait(w);\n        wait(rw_mutex);\n        signal(w);\n\n        /* writing is performed */\n\n        signal(rw_mutex);\n    }\n}\n\nvoid reader() {\n    while (1) {\n        wait(w);\n        wait(mutex);\n        read_count++;\n        if (read_count == 1)\n            wait(rw_mutex);\n        signal(mutex);\n        signal(w);\n\n        /* reading is performed */\n\n        wait(mutex);\n        read_count--;\n        if (read_count == 0)\n            signal(rw_mutex);\n        signal(mutex);\n    }\n}\n```",
+          "answer": "The code above is the completed FCFS readers-writers solution.\n\nSemaphore `w` makes arriving readers and writers queue in first-come, first-served order. While a writer waits on `w`, later readers also block at `wait(w)` instead of passing the writer, so writers do not starve."
+        },
+        {
+          "id": "4.2",
+          "type": "open",
+          "source": "2023 Spring Midterm Problem 3.2",
+          "prompt": "Complete the `Barrier` class so every thread waits until the last expected thread arrives.\n\n```cpp\nclass Barrier {\nprivate:\n    int numWaiting{0};\n    int numExpected{0};\n    Lock L;\n    ConditionVar CV;\n\npublic:\n    void threadCreated() {\n        L.acquire();\n        numExpected++;\n        L.release();\n    }\n\n    void enterBarrier() {\n        BLANK1;\n        numWaiting++;\n        if (numExpected == numWaiting) {\n            numWaiting = 0;\n            BLANK2;\n        } else {\n            BLANK3;\n        }\n        BLANK4;\n    }\n};\n```",
+          "answer": "- **Blank 1**: `L.acquire();`\n- **Blank 2**: `CV.signalAll();` — wake every thread waiting at the barrier\n- **Blank 3**: `CV.wait(&L);` — atomically release the lock and sleep\n- **Blank 4**: `L.release();` — release the lock after waking or finishing"
+        }
+      ]
+    }
+  ]
+}
