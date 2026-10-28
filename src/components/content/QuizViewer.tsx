@@ -116,9 +116,9 @@ function McQuestionBlock({ question }: { question: McQuizQuestion }) {
       </div>
 
       {state.showExplanation && state.checked && (
-        <p className="mt-4 border-l-[6px] border-accent bg-fg/5 py-2 pl-4 text-sm leading-relaxed">
-          {question.explanation}
-        </p>
+        <div className="mt-4 border-l-[6px] border-accent bg-fg/5 py-2 pl-4 pr-2 text-sm leading-relaxed">
+          <MarkdownContent content={question.explanation} />
+        </div>
       )}
     </div>
   );
@@ -176,9 +176,9 @@ function QuestionHeader({
       <div className="mb-1 text-xs font-bold uppercase tracking-widest text-accent">
         {source}
       </div>
-      <p className="mb-4 whitespace-pre-line text-base font-medium leading-relaxed">
-        {prompt}
-      </p>
+      <div className="mb-4 text-base font-medium leading-relaxed">
+        <MarkdownContent content={prompt} />
+      </div>
     </>
   );
 }
@@ -187,7 +187,10 @@ export function QuizViewer({ quiz }: QuizViewerProps) {
   const [openTopics, setOpenTopics] = useState<Record<string, boolean>>({});
 
   function toggleTopic(topicId: string) {
-    setOpenTopics((prev) => ({ ...prev, [topicId]: !prev[topicId] }));
+    setOpenTopics((prev) => ({
+      ...prev,
+      [topicId]: !(prev[topicId] ?? true),
+    }));
   }
 
   return (

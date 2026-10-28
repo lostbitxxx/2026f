@@ -1,0 +1,227 @@
+{
+  "id": "ch4",
+  "title": "Chapter 4 Past Midterm Question Bank",
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Topic 1: Overview of Threads & Multicore Programming",
+      "questions": [
+        {
+          "id": "1.1",
+          "type": "mc",
+          "source": "2021 Fall MC14 / 2022 Fall MC13",
+          "prompt": "Which of the following is unique for different threads within a process?",
+          "options": [
+            { "label": "A", "text": "Heap" },
+            { "label": "B", "text": "Data section" },
+            { "label": "C", "text": "Text section" },
+            { "label": "D", "text": "Stack" }
+          ],
+          "answer": "D",
+          "explanation": "Each thread has its own execution state, program counter, registers, and **stack** for local variables and function calls. The code (text), data section (global variables), and heap are shared across all threads in the same process."
+        },
+        {
+          "id": "1.2",
+          "type": "mc",
+          "source": "2025 Spring MC13",
+          "prompt": "Which of the following is NOT a characteristic of a thread in modern operating systems?",
+          "options": [
+            { "label": "A", "text": "Threads within the same process share resources such as memory." },
+            { "label": "B", "text": "Each thread has its own program counter." },
+            { "label": "C", "text": "Threads are typically independent and do not share data." },
+            { "label": "D", "text": "Threads can execute concurrently within a process." }
+          ],
+          "answer": "C",
+          "explanation": "Statement C is false because threads within the same process share data, global variables, heap memory, and open files."
+        },
+        {
+          "id": "1.3",
+          "type": "mc",
+          "source": "2021 Spring MC5",
+          "prompt": "Based on Amdahl's Law ($\\text{Speedup} \\le \\frac{1}{S + (1-S)/N}$), what is the speedup gain for an application that is 30% serial and run on a machine with 7 processing cores?",
+          "options": [
+            { "label": "A", "text": "2" },
+            { "label": "B", "text": "2.5" },
+            { "label": "C", "text": "3" },
+            { "label": "D", "text": "3.5" }
+          ],
+          "answer": "B",
+          "explanation": "Serial portion $S = 0.30$, parallel portion $1 - S = 0.70$, cores $N = 7$.\n\n$$\\text{Speedup} = \\frac{1}{0.30 + \\frac{0.70}{7}} = \\frac{1}{0.30 + 0.10} = \\frac{1}{0.40} = 2.5$$"
+        },
+        {
+          "id": "1.4",
+          "type": "mc",
+          "source": "2021 Fall MC16",
+          "prompt": "According to Amdahl's Law, what is the speedup for an application that is 80% parallel when run on a machine with 2 processing cores?",
+          "options": [
+            { "label": "A", "text": "1.60" },
+            { "label": "B", "text": "0.60" },
+            { "label": "C", "text": "1.67" },
+            { "label": "D", "text": "2" }
+          ],
+          "answer": "C",
+          "explanation": "Serial portion $S = 1 - 0.80 = 0.20$ and cores $N = 2$.\n\n$$\\text{Speedup} = \\frac{1}{0.20 + \\frac{0.80}{2}} = \\frac{1}{0.20 + 0.40} = \\frac{1}{0.60} \\approx 1.67$$\n\nThat is option C."
+        },
+        {
+          "id": "1.5",
+          "type": "mc",
+          "source": "2023 Fall MC16",
+          "prompt": "Based on Amdahl's Law, if the serial portion is 20%, at least how many cores are needed to obtain a speedup factor of 4?",
+          "options": [
+            { "label": "A", "text": "4" },
+            { "label": "B", "text": "8" },
+            { "label": "C", "text": "16" },
+            { "label": "D", "text": "32" }
+          ],
+          "answer": "C",
+          "explanation": "With $S = 0.20$ and desired speedup $4$:\n\n$$4 = \\frac{1}{0.20 + \\frac{0.80}{N}} \\implies 0.20 + \\frac{0.80}{N} = 0.25$$\n\n$$\\frac{0.80}{N} = 0.05 \\implies N = \\frac{0.80}{0.05} = 16$$"
+        },
+        {
+          "id": "1.6",
+          "type": "mc",
+          "source": "2024 Spring MC15",
+          "prompt": "According to Amdahl's Law, if the serial portion of a program is 10%, which of the following speedups is IMPOSSIBLE regardless of the number of cores?",
+          "options": [
+            { "label": "A", "text": "5" },
+            { "label": "B", "text": "7" },
+            { "label": "C", "text": "9" },
+            { "label": "D", "text": "11" }
+          ],
+          "answer": "D",
+          "explanation": "As $N \\to \\infty$, the maximum theoretical speedup is $\\frac{1}{S} = \\frac{1}{0.10} = 10$. Any speedup greater than 10, such as 11, is impossible."
+        },
+        {
+          "id": "1.7",
+          "type": "open",
+          "source": "2025 Spring Short Question 3",
+          "prompt": "What are the main differences between a process and a thread?",
+          "answer": "- **Process**: An independent execution unit with its own virtual address space (text, data, heap, stack), environment, and system resources. Context switching between processes requires reloading memory management pages and registers and is heavy.\n- **Thread**: A lightweight unit of execution within a process. Threads within the same process share the process's address space (code, data, heap) and open files, but each thread maintains its own thread ID, program counter, register set, and stack. Context switching between threads of the same process is faster and cheaper."
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "Topic 2: User Threads vs. Kernel Threads & Multithreading Models",
+      "questions": [
+        {
+          "id": "2.1",
+          "type": "mc",
+          "source": "2021 Spring MC1",
+          "prompt": "Which of the following is NOT contained in the Thread Control Block (TCB)?",
+          "options": [
+            { "label": "A", "text": "Execution state" },
+            { "label": "B", "text": "Scheduling information" },
+            { "label": "C", "text": "Pointer to enclosing process" },
+            { "label": "D", "text": "Process identifier" }
+          ],
+          "answer": "D",
+          "explanation": "A TCB stores thread-specific info (thread ID, saved register set, thread stack pointer, thread state, scheduling details, and a pointer to the parent process PCB). The process identifier belongs to the process control block (PCB)."
+        },
+        {
+          "id": "2.2",
+          "type": "mc",
+          "source": "2022 Spring MC13",
+          "prompt": "Which of the following statements about the Many-to-One threading model is true?",
+          "options": [
+            { "label": "A", "text": "When a thread in a multithreaded process is blocked, the process in the kernel is blocked because the result of the thread is not available." },
+            { "label": "B", "text": "Multithreading may not run in parallel on a multicore system." },
+            { "label": "C", "text": "All threads share one kernel process." },
+            { "label": "D", "text": "All of the above." }
+          ],
+          "answer": "D",
+          "explanation": "In many-to-one, all user threads share a single kernel thread. One blocking call blocks the whole process, and multi-core parallelism is impossible."
+        },
+        {
+          "id": "2.3",
+          "type": "mc",
+          "source": "2022 Fall MC16 / 2023 Spring MC13",
+          "prompt": "Which of the following statements about `clone()` and `fork()` in Linux is FALSE?",
+          "options": [
+            { "label": "A", "text": "clone() duplicates the data structure from the parent like fork()." },
+            { "label": "B", "text": "clone() enables a child to share part of the execution context with the parent." },
+            { "label": "C", "text": "clone() allows a child to select the extent of sharing with the parent." },
+            { "label": "D", "text": "clone() requires loading a new function to execute in a child process." }
+          ],
+          "answer": "A",
+          "explanation": "`fork()` creates a copy of the parent's address space, whereas `clone()` allows fine-grained control over whether resources (memory, file descriptors, signal handlers) are shared or copied using flags such as `CLONE_VM` and `CLONE_FILES`. Statement A is therefore false."
+        },
+        {
+          "id": "2.4",
+          "type": "mc",
+          "source": "2023 Fall MC15",
+          "prompt": "Which of the following statements is INCORRECT regarding user and kernel threads?",
+          "options": [
+            { "label": "A", "text": "A user thread must be mapped to a kernel thread before execution." },
+            { "label": "B", "text": "The operating system manages and schedules only kernel threads." },
+            { "label": "C", "text": "A user thread is uniquely represented by a TCB in the kernel." },
+            { "label": "D", "text": "Multiple kernel threads of a process enable multicores to run a program in parallel." }
+          ],
+          "answer": "C",
+          "explanation": "The kernel is unaware of individual user-level threads in user space (for example under the many-to-one model), so it does not maintain kernel-level TCBs for pure user threads."
+        },
+        {
+          "id": "2.5",
+          "type": "mc",
+          "source": "2025 Spring MC16",
+          "prompt": "What is a key difference between user threads and kernel threads?",
+          "options": [
+            { "label": "A", "text": "Kernel threads are scheduled by the user." },
+            { "label": "B", "text": "User threads are managed by the kernel." },
+            { "label": "C", "text": "User threads share the kernel's resources." },
+            { "label": "D", "text": "Kernel threads execute directly in user space." }
+          ],
+          "answer": "C",
+          "explanation": "User threads share kernel resources that are managed by the kernel threads they are mapped to. Kernel threads are scheduled by the kernel, and user threads are managed by a user-level library."
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "Topic 3: Threading Issues & Pthreads C Code Tracing",
+      "questions": [
+        {
+          "id": "3.1",
+          "type": "mc",
+          "source": "2021 Fall MC15",
+          "prompt": "Which of the following would be an acceptable signal handling scheme for a multithreaded program?",
+          "options": [
+            { "label": "A", "text": "Deliver the signal to the thread to which the signal applies." },
+            { "label": "B", "text": "Deliver the signal to every thread in the process." },
+            { "label": "C", "text": "Deliver the signal to only certain threads in the process." },
+            { "label": "D", "text": "All of the above." }
+          ],
+          "answer": "D",
+          "explanation": "All of these are acceptable signal-handling schemes for a multithreaded program: deliver the signal to the thread it applies to, to every thread in the process, or only to certain threads."
+        },
+        {
+          "id": "3.2",
+          "type": "mc",
+          "source": "2025 Spring MC15",
+          "prompt": "Which of the following statements about thread cancellation in Pthreads is correct?",
+          "options": [
+            { "label": "A", "text": "A cancellation request always terminates the target thread immediately, regardless of its cancellation type." },
+            { "label": "B", "text": "If a thread has cancellation disabled, it will ignore all cancellation requests permanently." },
+            { "label": "C", "text": "In deferred cancellation, the target thread controls when and where to terminate by periodically checking for cancellation." },
+            { "label": "D", "text": "Pthreads use asynchronous cancellation as the default behavior to ensure fast termination of threads." }
+          ],
+          "answer": "C",
+          "explanation": "Deferred cancellation is the default mode in Pthreads. The target thread exits when it reaches a cancellation point."
+        },
+        {
+          "id": "3.3",
+          "type": "open",
+          "source": "2025 Spring Calculation Q3.2",
+          "prompt": "What will be printed by the parent process and the child process?\n\n```c\nint x = 8;\nvoid *decrement(void *arg) {\n    int *data = arg;\n    x -= *data;\n    return NULL;\n}\nvoid *increment(void *arg) {\n    int *data = arg;\n    x += *data;\n    return NULL;\n}\nint main(int argc, char *argv[]) {\n    pid_t pid;\n    pthread_t tid1, tid2;\n    pthread_attr_t attr1, attr2;\n    int num1 = 3, num2 = 2;\n\n    printf(\"INITIAL: x = %d\\n\", x);\n    fflush(stdout);\n\n    pid = fork();\n    if (pid > 0) { /* Parent Process */\n        pthread_attr_init(&attr1);\n        pthread_create(&tid1, &attr1, decrement, &num1);\n        pthread_join(tid1, NULL);\n        printf(\"PARENT: x = %d\\n\", x);\n    } else if (pid == 0) { /* Child Process */\n        pthread_attr_init(&attr2);\n        pthread_create(&tid2, &attr2, increment, &num2);\n        pthread_join(tid2, NULL);\n        printf(\"CHILD: x = %d\\n\", x);\n    }\n    return 0;\n}\n```",
+          "answer": "1. The global variable starts at `x = 8`.\n2. `fork()` gives the parent and child **separate address spaces**. Each copy of `x` starts at 8.\n3. **Parent** (`pid > 0`): the `decrement` thread subtracts `num1 = 3`, so `x = 8 - 3 = 5`. It prints `PARENT: x = 5`.\n4. **Child** (`pid == 0`): the `increment` thread adds `num2 = 2`, so `x = 8 + 2 = 10`. It prints `CHILD: x = 10`.\n\n```text\nINITIAL: x = 8\nPARENT: x = 5\nCHILD: x = 10\n```\n\n`PARENT` and `CHILD` may appear in either order, depending on scheduling."
+        },
+        {
+          "id": "3.4",
+          "type": "open",
+          "source": "2023 Fall Calculation Q3.2",
+          "prompt": "Derive the outputs for `PARENT: x = ...` and `CHILD: x = ...`.\n\n```c\nint x = 5;\nvoid *subtract(void *arg) {\n    int *data = arg;\n    x -= *data;\n    return NULL;\n}\nvoid *multiply(void *arg) {\n    int *data = arg;\n    x *= *data;\n    return NULL;\n}\nint main(int argc, char *argv[]) {\n    pid_t pid;\n    pthread_t tid1, tid2;\n    int num1 = 3, num2 = 4;\n\n    pid = fork();\n    if (pid > 0) { /* Parent */\n        pthread_create(&tid1, NULL, subtract, &num1);\n        pthread_join(tid1, NULL);\n        printf(\"PARENT: x = %d\\n\", x);\n    } else if (pid == 0) { /* Child */\n        pthread_create(&tid2, NULL, multiply, &num2);\n        pthread_join(tid2, NULL);\n        printf(\"CHILD: x = %d\\n\", x);\n    }\n    return 0;\n}\n```",
+          "answer": "1. Initially `x = 5`. `fork()` duplicates the address space.\n2. **Parent**: `subtract` with `num1 = 3` computes `x = 5 - 3 = 2`, so it prints `PARENT: x = 2`.\n3. **Child**: `multiply` with `num2 = 4` computes `x = 5 * 4 = 20`, so it prints `CHILD: x = 20`."
+        }
+      ]
+    }
+  ]
+}

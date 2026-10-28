@@ -14,10 +14,12 @@ type PageProps = {
 };
 
 export function generateStaticParams() {
-  return getAllChapterParams().map(({ slug, chapter }) => ({
-    slug,
-    chapter,
-  }));
+  return getAllChapterParams()
+    .filter(({ slug, chapter }) => getNote(slug, chapter))
+    .map(({ slug, chapter }) => ({
+      slug,
+      chapter,
+    }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
